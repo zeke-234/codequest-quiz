@@ -185,7 +185,7 @@ footer {
 </div>
 <footer>
     <p>Every great website starts with good structure. — HTML <br>
-    <button class="home"><a href="/project/index.html.html">GO TO HOME</a></button></p>
+    <button class="home"><a href="/project/index.html">GO TO HOME</a></button></p>
 </footer>
     
 </body>
@@ -399,32 +399,20 @@ let score = 0;
 let answered = false;
 
 
-
-
 const questionElement = document.getElementById("question");
-
 const optionButtons = document.querySelectorAll(".option");
-
 const nextButton = document.getElementById("nextQuestion");
-
 const showAnswerButton = document.getElementById("showAnswer");
-
 const answerElement = document.getElementById("answer");
-
 const card = document.getElementById("flashcard");
-
 const scoreElement = document.getElementById("score");
-
 const progressElement = document.getElementById("progress");
-
 const resultElement = document.getElementById("result");
-
 const finalScoreElement = document.getElementById("finalScore");
-
 const tryAgainButton = document.getElementById("tryAgain");
 
 
-
+// Show question
 function showQuestion() {
 
     const current = questions[currentQuestion];
@@ -446,14 +434,16 @@ function showQuestion() {
 
         button.textContent = current.options[index];
 
+        // Reset button colors
         button.style.backgroundColor = "";
         button.style.color = "";
 
+
         button.onclick = function () {
 
-            if (answered) {
-                return;
-            }
+            // Prevent answering twice
+            if (answered) return;
+
 
             if (button.textContent === current.answer) {
 
@@ -465,21 +455,21 @@ function showQuestion() {
                 scoreElement.textContent =
                     "Score: " + score + " / " + questions.length;
 
-            } else {c
+            } else {
 
                 button.style.backgroundColor = "red";
                 button.style.color = "white";
-
             }
 
-            answered = true;
 
+            answered = true;
         };
 
     });
-
 }
 
+
+// Show answer button
 showAnswerButton.addEventListener("click", function () {
 
     const current = questions[currentQuestion];
@@ -492,7 +482,7 @@ showAnswerButton.addEventListener("click", function () {
 });
 
 
-
+// Next question button
 nextButton.addEventListener("click", function () {
 
     // If this is the last question
@@ -509,7 +499,7 @@ nextButton.addEventListener("click", function () {
     }
 
 
- 
+    // Flip the card
     card.classList.add("flip");
 
 
@@ -526,12 +516,13 @@ nextButton.addEventListener("click", function () {
 });
 
 
-
-
+// Try Again button
 tryAgainButton.addEventListener("click", function () {
 
     currentQuestion = 0;
+
     score = 0;
+
     answered = false;
 
     resultElement.style.display = "none";
@@ -541,7 +532,6 @@ tryAgainButton.addEventListener("click", function () {
     showQuestion();
 
 });
-
 
 
 
