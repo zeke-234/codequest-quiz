@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML QUIZ.</title>
+    <style>
+        body{
+    margin: 0;
+    background: linear-gradient(135deg,
+    #eef2ff,
+    #f8fafc); 
+    color: #172554;
+}
+    .first{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: cursive;
+    font-weight: bolder;
+    font-size: 20px;
+    background-color: #172033 ;
+    color: white;
+    letter-spacing: 2px;
+}
+#flashcard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: #172554;
+    color: white;
+    width: 63%;
+    height: 64vh;
+    margin-left: 300px;
+    margin-top: 6vh;
+    border-radius: 25px;
+    text-align: justify;
+    
+}
+#flashcard h2{
+    font-family: monospace;
+    letter-spacing: 2px;
+    font-size: 23px;
+    font-weight: bolder;
+    text-decoration: underline;
+    
+}
+#flashcard p{
+    font-family: monospace;
+    font-size: 20px;
+}
+.options {
+    width: 80%;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.options button{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: #f8fafc;
+    color: #172554;
+}
+.options button:hover{
+    background-color: #9ba8d1;
+}
+.func{
+    display: flex;
+    gap: 37px;
+}
+.func button{
+    font-size: 15px;
+    width: 150px;
+    height: 40px;
+    transition: transform 0.5s ease;
+
+}
+.func button:hover{
+   transform: translateY(-4px);
+    box-shadow: 3px 3px 2px 2px #506591;
+
+}
+#flashcard {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+#flashcard.flip {
+    transform: rotateY(180deg);
+}
+#answer {
+    display: none;
+}
+#score{
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+}
+#progress{
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+}
+#result{
+    display: flex;
+    font-size: 23px;
+    margin-left: 700px;
+
+}
+#result button{
+    width: 150px;
+    height: 60px;
+    border: 1px solid;
+    border-radius: 10px;
+    color: #eef2ff;
+    background-color: #172033;
+}
+#result button:hover{
+     transform: translateY(-4px);
+    box-shadow: 3px 3px 2px 2px #506591;
+}
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 15px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif ;
+    font-weight: bolder;
+    font-size: 20px;
+    line-height: 45px;
+}
+.home{
+    background-color: #172554;
+    width: 150px;
+    height: 40px;
+    border: 0px solid;
+    border-radius: 14px;
+    color: #f8fafc;
+}
+.home:hover{
+    
+   transform: translateY(-4px);
+    box-shadow: 3px 3px 2px 2px #506591;
+}
+.home a{
+    text-decoration: none;
+    color: #f8fafc;
+}
+
+    </style>
+</head>
+<body>
+    <div class="first">
+        <h2>HTML QUIZ SECTION.</h2>
+        <p>HTML is the foundation of every website. <br>It gives webpages their 
+            structure and helps organize content such as <br>headings, paragraphs, images, links, forms, and more. 
+            <br>Test your knowledge and see how well you understand the building blocks of the web. </p>
+    </div>
+<p id="score">Score: 0 / 10</p>
+<p id="progress">Question 1 of 10</p>
+    <div id="flashcard">
+        <h2>HTML</h2>
+        <p id="question">What does HTML stand for?</p>
+        <div class="options">
+        <button class="option"></button>
+        <button class="option"></button>
+        <button class="option"></button>
+        <button class="option"></button>
+        </div>
+        <div class="func">
+            <p id="answer"></p>
+            <button id="showAnswer">Show answer</button>
+            <button id="nextQuestion">Next question</button>
+        </div>
+    </div>
+     <div id="result" style="display: none;" >
+    <h2>Quiz Complete! 🎉</h2>
+    <p id="finalScore"></p>
+    <button id="tryAgain">Try Again</button>
+</div>
+<footer>
+    <p>Every great website starts with good structure. — HTML <br>
+    <button class="home"><a href="/project/">GO TO HOME</a></button></p>
+</footer>
+    
+</body>
+<script>
+const questions = [
+    {
+        question: "Which attribute specifies the destination of a hyperlink?",
+        options: ["src", "href", "link", "url"],
+        answer: "href"
+    },
+
+    {
+        question: "What is the main purpose of the <head> element?",
+        options: [
+            "To display the main content",
+            "To contain metadata and document information",
+            "To create the navigation bar",
+            "To display the page heading"
+        ],
+        answer: "To contain metadata and document information"
+    },
+
+    {
+        question: "Which element is semantically used for a group of navigation links?",
+        options: ["<links>", "<navigate>", "<nav>", "<menu>"],
+        answer: "<nav>"
+    },
+
+    {
+        question: "Which attribute provides alternative text for an image?",
+        options: ["title", "src", "alt", "description"],
+        answer: "alt"
+    },
+
+    {
+        question: "Which HTML element is used to associate a label with a form input?",
+        options: ["<label>", "<form-label>", "<name>", "<caption>"],
+        answer: "<label>"
+    },
+
+    {
+        question: "What does the 'required' attribute do on a form input?",
+        options: [
+            "Makes the input read-only",
+            "Prevents the form from being submitted without a value",
+            "Automatically fills the input",
+            "Changes the input into a password field"
+        ],
+        answer: "Prevents the form from being submitted without a value"
+    },
+
+    {
+        question: "Which element is best suited for a self-contained piece of content, such as a blog post?",
+        options: [
+            "<section>",
+            "<article>",
+            "<div>",
+            "<aside>"
+        ],
+        answer: "<article>"
+    },
+
+    {
+        question: "Which attribute is commonly used to open a link in a new browser tab?",
+        options: [
+            "new-tab",
+            "target",
+            "window",
+            "open"
+        ],
+        answer: "target"
+    },
+
+    {
+        question: "What is the purpose of the 'for' attribute on a <label>?",
+        options: [
+            "It connects the label to a specific input",
+            "It submits the form",
+            "It changes the label's color",
+            "It creates a placeholder"
+        ],
+        answer: "It connects the label to a specific input"
+    },
+
+    {
+        question: "Which element represents the most important heading level in HTML?",
+        options: [
+            "<heading>",
+            "<h6>",
+            "<head>",
+            "<h1>"
+        ],
+        answer: "<h1>"
+    },
+
+    {
+        question: "Which HTML element is used to define an unordered list?",
+        options: [
+            "<ol>",
+            "<li>",
+            "<ul>",
+            "<list>"
+        ],
+        answer: "<ul>"
+    },
+
+    {
+        question: "Which HTML element contains an individual item in a list?",
+        options: [
+            "<item>",
+            "<li>",
+            "<ul>",
+            "<list-item>"
+        ],
+        answer: "<li>"
+    },
+
+    {
+        question: "What is the purpose of the <main> element?",
+        options: [
+            "To contain the primary content of the document",
+            "To create the website's navigation",
+            "To contain metadata",
+            "To create the footer"
+        ],
+        answer: "To contain the primary content of the document"
+    },
+
+    {
+        question: "Which attribute gives an HTML element a unique identifier?",
+        options: [
+            "class",
+            "name",
+            "id",
+            "key"
+        ],
+        answer: "id"
+    },
+
+    {
+        question: "What is the main difference between an id and a class?",
+        options: [
+            "An id is normally unique, while a class can be used on multiple elements",
+            "A class is always unique, while an id can be repeated",
+            "There is no difference",
+            "An id can only be used with images"
+        ],
+        answer: "An id is normally unique, while a class can be used on multiple elements"
+    },
+
+    {
+        question: "Which HTML element is used to create a form?",
+        options: [
+            "<input>",
+            "<form>",
+            "<fieldset>",
+            "<data>"
+        ],
+        answer: "<form>"
+    },
+
+    {
+        question: "Which input type is used to allow a user to enter a password?",
+        options: [
+            "text",
+            "hidden",
+            "password",
+            "secret"
+        ],
+        answer: "password"
+    },
+
+    {
+        question: "Which element is used to create a dropdown list?",
+        options: [
+            "<dropdown>",
+            "<select>",
+            "<option-list>",
+            "<choice>"
+        ],
+        answer: "<select>"
+    },
+
+    {
+        question: "Which element defines an option inside a <select> element?",
+        options: [
+            "<choice>",
+            "<item>",
+            "<option>",
+            "<select-item>"
+        ],
+        answer: "<option>"
+    },
+
+    {
+        question: "Which declaration tells the browser that the document uses HTML5?",
+        options: [
+            "<html5>",
+            "<doctype html>",
+            "<!DOCTYPE html>",
+            "<HTML5>"
+        ],
+        answer: "<!DOCTYPE html>"
+    }
+];
+
+
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+
+
+
+const questionElement = document.getElementById("question");
+
+const optionButtons = document.querySelectorAll(".option");
+
+const nextButton = document.getElementById("nextQuestion");
+
+const showAnswerButton = document.getElementById("showAnswer");
+
+const answerElement = document.getElementById("answer");
+
+const card = document.getElementById("flashcard");
+
+const scoreElement = document.getElementById("score");
+
+const progressElement = document.getElementById("progress");
+
+const resultElement = document.getElementById("result");
+
+const finalScoreElement = document.getElementById("finalScore");
+
+const tryAgainButton = document.getElementById("tryAgain");
+
+
+
+function showQuestion() {
+
+    const current = questions[currentQuestion];
+
+    answered = false;
+
+    questionElement.textContent = current.question;
+
+    progressElement.textContent =
+        "Question " + (currentQuestion + 1) + " of " + questions.length;
+
+    scoreElement.textContent =
+        "Score: " + score + " / " + questions.length;
+
+    answerElement.style.display = "none";
+
+
+    optionButtons.forEach((button, index) => {
+
+        button.textContent = current.options[index];
+
+        button.style.backgroundColor = "";
+        button.style.color = "";
+
+        button.onclick = function () {
+
+            if (answered) {
+                return;
+            }
+
+            if (button.textContent === current.answer) {
+
+                button.style.backgroundColor = "green";
+                button.style.color = "white";
+
+                score++;
+
+                scoreElement.textContent =
+                    "Score: " + score + " / " + questions.length;
+
+            } else {c
+
+                button.style.backgroundColor = "red";
+                button.style.color = "white";
+
+            }
+
+            answered = true;
+
+        };
+
+    });
+
+}
+
+showAnswerButton.addEventListener("click", function () {
+
+    const current = questions[currentQuestion];
+
+    answerElement.textContent =
+        "Answer: " + current.answer;
+
+    answerElement.style.display = "block";
+
+});
+
+
+
+nextButton.addEventListener("click", function () {
+
+    // If this is the last question
+    if (currentQuestion === questions.length - 1) {
+
+        card.style.display = "none";
+
+        resultElement.style.display = "block";
+
+        finalScoreElement.textContent =
+            "You scored " + score + " / " + questions.length;
+
+        return;
+    }
+
+
+ 
+    card.classList.add("flip");
+
+
+    setTimeout(function () {
+
+        currentQuestion++;
+
+        showQuestion();
+
+        card.classList.remove("flip");
+
+    }, 300);
+
+});
+
+
+
+
+tryAgainButton.addEventListener("click", function () {
+
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+
+    resultElement.style.display = "none";
+
+    card.style.display = "block";
+
+    showQuestion();
+
+});
+
+
+
+
+showQuestion();
+</script>
+</html>

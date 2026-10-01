@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript QUIZ.</title>
+    <style>
+        body{
+    margin: 0;
+    background:#080808; 
+    color: #ffffff;
+}
+    .first{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: cursive;
+    font-weight: bolder;
+    font-size: 20px;
+    background-color: #91770f ;
+    color: white;
+    letter-spacing: 2px;
+}
+#flashcard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color:  #171717;;
+    color: white;
+    width: 63%;
+    height: 64vh;
+    margin-left: 300px;
+    margin-top: 6vh;
+    border-radius: 25px;
+    text-align: justify;
+    
+}
+#flashcard h2{
+    font-family: monospace;
+    letter-spacing: 2px;
+    font-size: 23px;
+    font-weight: bolder;
+    text-decoration: underline;
+    
+}
+#flashcard p{
+    font-family: monospace;
+    font-size: 20px;
+}
+.options {
+    width: 80%;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.options button{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: #f8fafc;
+    color: #172554;
+}
+.options button:hover{
+    background-color: #6d6e67;
+}
+.func{
+    display: flex;
+    gap: 37px;
+}
+.func button{
+    font-size: 15px;
+    width: 150px;
+    height: 40px;
+    transition: transform 0.5s ease;
+
+}
+.func button:hover{
+   transform: translateY(-4px);
+    box-shadow: 3px 3px 2px 2px #888a7d;
+
+}
+#flashcard {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+#flashcard.flip {
+    transform: rotateY(180deg);
+}
+#answer {
+    display: none;
+}
+#score{
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+}
+#progress{
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+}
+#result{
+    display: flex;
+    font-size: 23px;
+    margin-left: 700px;
+
+}
+#result button{
+    width: 150px;
+    height: 60px;
+    border: 1px solid;
+    border-radius: 10px;
+    color: #eef2ff;
+    background-color: #172033;
+}
+#result button:hover{
+     transform: translateY(-4px);
+    box-shadow: 3px 3px 2px 2px #506591;
+}
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 15px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif ;
+    font-weight: bolder;
+    font-size: 20px;
+    line-height: 45px;
+}
+.home{
+    background-color: #171717;
+    width: 150px;
+    height: 40px;
+    border: 0px solid;
+    border-radius: 14px;
+    color: #f8fafc;
+}
+.home:hover{
+    
+   transform: translateY(-4px);
+    box-shadow: 3px 3px 2px 2px  #080808;
+}
+.home a{
+    text-decoration: none;
+    color: #f8fafc;
+}
+    </style>
+</head>
+<body>
+    <div class="first">
+        <h2>JavaScript QUIZ SECTION.</h2>
+        <p>JavaScript brings websites to life by allowing them to respond to users and perform actions. 
+            <br> From variables and arrays to conditions, loops, functions, and events, <br>JavaScript makes webpages interactive. <br>
+            Test your knowledge and see what you remember.</p>
+    </div>
+<p id="score">Score: 0 / 10</p>
+<p id="progress">Question 1 of 10</p>
+    <div id="flashcard">
+        <h2>HTML</h2>
+        <p id="question"></p>
+        <div class="options">
+        <button class="option"></button>
+        <button class="option"></button>
+        <button class="option"></button>
+        <button class="option"></button>
+        </div>
+        <div class="func">
+            <p id="answer"></p>
+            <button id="showAnswer">Show answer</button>
+            <button id="nextQuestion">Next question</button>
+        </div>
+    </div>
+     <div id="result" style="display: none;" >
+    <h2>Quiz Complete! 🎉</h2>
+    <p id="finalScore"></p>
+    <button id="tryAgain">Try Again</button>
+</div>
+    <footer>
+        <p>Don't just build it. Make it interactive. — JavaScript <br>
+        <button class="home"><a href="/project/codequest.html">GO TO HOME</a></button></p>
+    </footer>
+</body>
+<script>
+const questions = [
+    {
+        question: "Which keyword can be used to create a variable in JavaScript?",
+        options: ["let", "var", "const", "All of the above"],
+        answer: "All of the above"
+    },
+    {
+        question: "Which data type is used for true or false values?",
+        options: ["String", "Boolean", "Number", "Array"],
+        answer: "Boolean"
+    },
+    {
+        question: "Which of these is a string?",
+        options: ['"Hello"', "25", "true", "[1, 2, 3]"],
+        answer: '"Hello"'
+    },
+    {
+        question: "Which symbol is used to assign a value to a variable?",
+        options: ["==", "=", "===", "!="],
+        answer: "="
+    },
+    {
+        question: "Which operator checks if two values are strictly equal?",
+        options: ["=", "==", "===", "!="],
+        answer: "==="
+    },
+    {
+        question: "Which method adds an item to the end of an array?",
+        options: ["pop()", "push()", "add()", "insert()"],
+        answer: "push()"
+    },
+    {
+        question: "Which method removes the last item from an array?",
+        options: ["remove()", "delete()", "pop()", "push()"],
+        answer: "pop()"
+    },
+    {
+        question: "Which method checks whether an array contains a particular value?",
+        options: ["contains()", "has()", "includes()", "check()"],
+        answer: "includes()"
+    },
+    {
+        question: "Which symbol is used for an OR logical operator?",
+        options: ["&&", "||", "!", "??"],
+        answer: "||"
+    },
+    {
+        question: "Which symbol is used for an AND logical operator?",
+        options: ["&&", "||", "!", "&"],
+        answer: "&&"
+    },
+    {
+        question: "Which statement is used to run code when a condition is true?",
+        options: ["if", "for", "switch", "repeat"],
+        answer: "if"
+    },
+    {
+        question: "Which statement runs when the if condition is false?",
+        options: ["then", "otherwise", "else", "next"],
+        answer: "else"
+    },
+    {
+        question: "Which JavaScript function displays a pop-up message?",
+        options: ["message()", "alert()", "popup()", "display()"],
+        answer: "alert()"
+    },
+    {
+        question: "Which JavaScript function allows the user to enter information?",
+        options: ["input()", "prompt()", "write()", "ask()"],
+        answer: "prompt()"
+    },
+    {
+        question: "What does a loop allow you to do?",
+        options: [
+            "Style an element",
+            "Repeat code",
+            "Create an HTML page",
+            "Change a browser"
+        ],
+        answer: "Repeat code"
+    },
+    {
+        question: "Which loop is commonly used to repeat code a specific number of times?",
+        options: ["if loop", "for loop", "repeat loop", "while-if"],
+        answer: "for loop"
+    },
+    {
+        question: "Which method is used to find an HTML element by its ID?",
+        options: [
+            "getElementById()",
+            "getHTMLById()",
+            "findElement()",
+            "queryId()"
+        ],
+        answer: "getElementById()"
+    },
+    {
+        question: "What does addEventListener() allow you to do?",
+        options: [
+            "Add CSS",
+            "Listen for an event and run code",
+            "Create an array",
+            "Delete an element"
+        ],
+        answer: "Listen for an event and run code"
+    },
+    {
+        question: "Which event happens when a user clicks an element?",
+        options: ["hover", "change", "click", "press"],
+        answer: "click"
+    },
+    {
+        question: "What is an array used for in JavaScript?",
+        options: [
+            "Storing multiple values",
+            "Changing CSS colors",
+            "Creating HTML tags",
+            "Opening a browser"
+        ],
+        answer: "Storing multiple values"
+    }
+];
+
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+
+// Get HTML elements
+const questionElement = document.getElementById("question");
+const optionButtons = document.querySelectorAll(".option");
+const nextButton = document.getElementById("nextQuestion");
+const showAnswerButton = document.getElementById("showAnswer");
+const answerElement = document.getElementById("answer");
+const card = document.getElementById("flashcard");
+const scoreElement = document.getElementById("score");
+const progressElement = document.getElementById("progress");
+const resultElement = document.getElementById("result");
+const finalScoreElement = document.getElementById("finalScore");
+const tryAgainButton = document.getElementById("tryAgain");
+
+
+// Show question
+function showQuestion() {
+
+    const current = questions[currentQuestion];
+
+    answered = false;
+
+    questionElement.textContent = current.question;
+
+    progressElement.textContent =
+        "Question " + (currentQuestion + 1) + " of " + questions.length;
+
+    scoreElement.textContent =
+        "Score: " + score + " / " + questions.length;
+
+    answerElement.style.display = "none";
+
+
+    optionButtons.forEach((button, index) => {
+
+        button.textContent = current.options[index];
+
+        // Reset button colors
+        button.style.backgroundColor = "";
+        button.style.color = "";
+
+
+        button.onclick = function () {
+
+            // Prevent answering twice
+            if (answered) return;
+
+
+            if (button.textContent === current.answer) {
+
+                button.style.backgroundColor = "green";
+                button.style.color = "white";
+
+                score++;
+
+                scoreElement.textContent =
+                    "Score: " + score + " / " + questions.length;
+
+            } else {
+
+                button.style.backgroundColor = "red";
+                button.style.color = "white";
+            }
+
+
+            answered = true;
+        };
+
+    });
+}
+
+
+// Show answer button
+showAnswerButton.addEventListener("click", function () {
+
+    const current = questions[currentQuestion];
+
+    answerElement.textContent =
+        "Answer: " + current.answer;
+
+    answerElement.style.display = "block";
+
+});
+
+
+// Next question button
+nextButton.addEventListener("click", function () {
+
+    // If this is the last question
+    if (currentQuestion === questions.length - 1) {
+
+        card.style.display = "none";
+
+        resultElement.style.display = "block";
+
+        finalScoreElement.textContent =
+            "You scored " + score + " / " + questions.length;
+
+        return;
+    }
+
+
+    // Flip the card
+    card.classList.add("flip");
+
+
+    setTimeout(function () {
+
+        currentQuestion++;
+
+        showQuestion();
+
+        card.classList.remove("flip");
+
+    }, 300);
+
+});
+
+
+// Try Again button
+tryAgainButton.addEventListener("click", function () {
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answered = false;
+
+    resultElement.style.display = "none";
+
+    card.style.display = "block";
+
+    showQuestion();
+
+});
+
+
+// Start the quiz
+showQuestion();
+</script>
+</html>

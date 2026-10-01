@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS QUIZ.</title>
+    <style>
+        body{
+    margin: 0;
+    background: #06151a;
+    color: #ecfeff;
+}
+    .first{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: cursive;
+    font-weight: bolder;
+    font-size: 20px;
+    background-color: #06b6d4;
+    color: white;
+    letter-spacing: 2px;
+}
+#flashcard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: #0d252c;
+    color: white;
+    width: 63%;
+    height: 64vh;
+    margin-left: 300px;
+    margin-top: 6vh;
+    border-radius: 25px;
+    text-align: justify;
+    
+}
+#flashcard h2{
+    font-family: monospace;
+    letter-spacing: 2px;
+    font-size: 23px;
+    font-weight: bolder;
+    text-decoration: underline;
+    
+}
+#flashcard p{
+    font-family: monospace;
+    font-size: 20px;
+}
+.options {
+    width: 80%;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.options button{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: #f8fafc;
+    color: #172554;
+}
+.options button:hover{
+    background-color: #22d3ee;
+}
+.func{
+    display: flex;
+    gap: 37px;
+}
+.func button{
+    font-size: 15px;
+    width: 150px;
+    height: 40px;
+    transition: transform 0.5s ease;
+
+}
+.func button:hover{
+   transform: translateY(-4px);
+    box-shadow: 3px 3px 2px 2px #19343d;
+
+}
+#flashcard {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+#flashcard.flip {
+    transform: rotateY(180deg);
+}
+#answer {
+    display: none;
+}
+#score{
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+}
+#progress{
+    display: flex;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+}
+#result{
+    display: flex;
+    font-size: 23px;
+    margin-left: 700px;
+
+}
+#result button{
+    width: 150px;
+    height: 60px;
+    border: 1px solid;
+    border-radius: 10px;
+    color: #eef2ff;
+    background-color: #172033;
+}
+#result button:hover{
+     transform: translateY(-4px);
+    box-shadow: 3px 3px 2px 2px #506591;
+}
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 15px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif ;
+    font-weight: bolder;
+    font-size: 20px;
+    line-height: 45px;
+}
+.home{
+    background-color: #0d252c;
+    width: 150px;
+    height: 40px;
+    border: 0px solid;
+    border-radius: 14px;
+    color: #f8fafc;
+}
+.home:hover{
+    
+   transform: translateY(-4px);
+    box-shadow: 3px 3px 2px 2px #19343d;
+}
+.home a{
+    text-decoration: none;
+    color: #f8fafc;
+}
+    </style>
+</head>
+<body>
+    <div class="first">
+        <h2>CSS QUIZ SECTION.</h2>
+        <p>CSS is what makes a webpage look good. <br>It allows you to control colors, spacing, layouts, fonts, animations, and much more. <br>
+            Take this quiz to test your understanding <br>of the styles and layouts you've learned. </p>
+    </div>
+<p id="score">Score: 0 / 10</p>
+<p id="progress">Question 1 of 10</p>
+    <div id="flashcard">
+        <h2>CSS</h2>
+        <p id="question"></p>
+        <div class="options">
+        <button class="option"></button>
+        <button class="option"></button>
+        <button class="option"></button>
+        <button class="option"></button>
+        </div>
+        <div class="func">
+            <p id="answer"></p>
+            <button id="showAnswer">Show answer</button>
+            <button id="nextQuestion">Next question</button>
+        </div>
+    </div>
+     <div id="result" style="display: none;" >
+    <h2>Quiz Complete! 🎉</h2>
+    <p id="finalScore"></p>
+    <button id="tryAgain">Try Again</button>
+</div>
+    <footer>
+        <p>Structure is important, but style brings it to life. — CSS <br>
+        <button class="home"><a href="/project/codequest.html">GO TO HOME</a></button></p>
+    </footer>
+</body>
+<script>
+    let currentQuestion = 0;
+let score = 0;
+let answered = false;
+const questions = [
+    {
+        question: "Which CSS property is used to change the text color?",
+        options: [
+            "font-color",
+            "text-color",
+            "color",
+            "foreground"
+        ],
+        answer: "color"
+    },
+
+    {
+        question: "Which CSS property is used to change the background color of an element?",
+        options: [
+            "background-color",
+            "color",
+            "bg-color",
+            "background"
+        ],
+        answer: "background-color"
+    },
+
+    {
+        question: "Which CSS property controls the space inside an element, between its content and border?",
+        options: [
+            "margin",
+            "padding",
+            "spacing",
+            "border-spacing"
+        ],
+        answer: "padding"
+    },
+
+    {
+        question: "Which CSS property controls the space outside an element?",
+        options: [
+            "padding",
+            "margin",
+            "spacing",
+            "outside-space"
+        ],
+        answer: "margin"
+    },
+
+    {
+        question: "Which value of display creates a flexible layout?",
+        options: [
+            "block",
+            "inline",
+            "flex",
+            "grid"
+        ],
+        answer: "flex"
+    },
+
+    {
+        question: "Which property is used to change the direction of items in a flex container?",
+        options: [
+            "flex-direction",
+            "direction",
+            "flex-flow",
+            "item-direction"
+        ],
+        answer: "flex-direction"
+    },
+
+    {
+        question: "Which property is commonly used to center items horizontally in a flex container?",
+        options: [
+            "align-items",
+            "justify-content",
+            "text-align",
+            "place-items"
+        ],
+        answer: "justify-content"
+    },
+
+    {
+        question: "Which property is commonly used to center items vertically in a flex container?",
+        options: [
+            "justify-content",
+            "align-items",
+            "vertical-align",
+            "align-content"
+        ],
+        answer: "align-items"
+    },
+
+    {
+        question: "Which CSS property is used to create space between items in a flex or grid layout?",
+        options: [
+            "spacing",
+            "margin-gap",
+            "gap",
+            "space"
+        ],
+        answer: "gap"
+    },
+
+    {
+        question: "Which CSS property is used to make an element's corners rounded?",
+        options: [
+            "corner-radius",
+            "border-radius",
+            "radius",
+            "round-corners"
+        ],
+        answer: "border-radius"
+    },
+
+    {
+        question: "Which property is used to add a shadow around an element?",
+        options: [
+            "element-shadow",
+            "box-shadow",
+            "shadow",
+            "border-shadow"
+        ],
+        answer: "box-shadow"
+    },
+
+    {
+        question: "Which CSS pseudo-class is commonly used when the mouse pointer is over an element?",
+        options: [
+            ":active",
+            ":focus",
+            ":hover",
+            ":mouse"
+        ],
+        answer: ":hover"
+    },
+
+    {
+        question: "Which CSS property is used to control the speed of a transition?",
+        options: [
+            "transition-duration",
+            "animation-speed",
+            "transition-speed",
+            "duration"
+        ],
+        answer: "transition-duration"
+    },
+
+    {
+        question: "Which CSS property is used to change the size of an element using transform?",
+        options: [
+            "resize",
+            "scale",
+            "transform-size",
+            "size"
+        ],
+        answer: "scale"
+    },
+
+    {
+        question: "Which CSS property is used to rotate, scale, or move an element?",
+        options: [
+            "position",
+            "transform",
+            "motion",
+            "animation"
+        ],
+        answer: "transform"
+    },
+
+    {
+        question: "Which CSS property controls the stacking order of positioned elements?",
+        options: [
+            "stack",
+            "layer",
+            "z-index",
+            "position-index"
+        ],
+        answer: "z-index"
+    },
+
+    {
+        question: "Which value of position keeps an element attached to the viewport while scrolling?",
+        options: [
+            "absolute",
+            "relative",
+            "fixed",
+            "sticky"
+        ],
+        answer: "fixed"
+    },
+
+    {
+        question: "Which CSS property is used to define columns and rows in a grid layout?",
+        options: [
+            "grid-template",
+            "grid-layout",
+            "grid-structure",
+            "grid-system"
+        ],
+        answer: "grid-template"
+    },
+
+    {
+        question: "What does box-sizing: border-box do?",
+        options: [
+            "Removes the border",
+            "Includes padding and border in the element's set width and height",
+            "Adds a box around the element",
+            "Makes the element responsive"
+        ],
+        answer: "Includes padding and border in the element's set width and height"
+    },
+
+    {
+        question: "Which CSS at-rule is used to create animations with keyframes?",
+        options: [
+            "@animation",
+            "@keyframes",
+            "@animate",
+            "@motion"
+        ],
+        answer: "@keyframes"
+    }
+];
+
+
+
+
+const questionElement = document.getElementById("question");
+
+const optionButtons = document.querySelectorAll(".option");
+
+const nextButton = document.getElementById("nextQuestion");
+
+const showAnswerButton = document.getElementById("showAnswer");
+
+const answerElement = document.getElementById("answer");
+
+const card = document.getElementById("flashcard");
+
+const scoreElement = document.getElementById("score");
+
+const progressElement = document.getElementById("progress");
+
+const resultElement = document.getElementById("result");
+
+const finalScoreElement = document.getElementById("finalScore");
+
+const tryAgainButton = document.getElementById("tryAgain");
+
+
+
+function showQuestion() {
+
+    const current = questions[currentQuestion];
+
+    answered = false;
+
+    questionElement.textContent = current.question;
+
+    progressElement.textContent =
+        "Question " + (currentQuestion + 1) + " of " + questions.length;
+
+    scoreElement.textContent =
+        "Score: " + score + " / " + questions.length;
+
+    answerElement.style.display = "none";
+
+
+    optionButtons.forEach((button, index) => {
+
+        button.textContent = current.options[index];
+
+        button.style.backgroundColor = "";
+        button.style.color = "";
+
+        button.onclick = function () {
+
+            if (answered) {
+                return;
+            }
+
+            if (button.textContent === current.answer) {
+
+                button.style.backgroundColor = "green";
+                button.style.color = "white";
+
+                score++;
+
+                scoreElement.textContent =
+                    "Score: " + score + " / " + questions.length;
+
+            } else {
+
+                button.style.backgroundColor = "red";
+                button.style.color = "white";
+
+            }
+
+            answered = true;
+
+        };
+
+    });
+
+}
+
+showAnswerButton.addEventListener("click", function () {
+
+    const current = questions[currentQuestion];
+
+    answerElement.textContent =
+        "Answer: " + current.answer;
+
+    answerElement.style.display = "block";
+
+});
+
+
+
+nextButton.addEventListener("click", function () {
+
+    // If this is the last question
+    if (currentQuestion === questions.length - 1) {
+
+        card.style.display = "none";
+
+        resultElement.style.display = "block";
+
+        finalScoreElement.textContent =
+            "You scored " + score + " / " + questions.length;
+
+        return;
+    }
+
+
+ 
+    card.classList.add("flip");
+
+
+    setTimeout(function () {
+
+        currentQuestion++;
+
+        showQuestion();
+
+        card.classList.remove("flip");
+
+    }, 300);
+
+});
+
+
+
+
+tryAgainButton.addEventListener("click", function () {
+
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+
+    resultElement.style.display = "none";
+
+    card.style.display = "block";
+
+    showQuestion();
+
+});
+
+
+
+
+showQuestion();
+</script>
+</html>
